@@ -18,9 +18,9 @@ import com.project.aluveryx.sampleData.sampleProducts
 
 @Composable
 fun ProductsSection(
+    sectionTitle: String,
     productsList: List<Product>,
-    modifier: Modifier = Modifier,
-    sectionTitle: String = "Title"
+    modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
         Text(
@@ -41,12 +41,11 @@ fun ProductsSection(
 
         }
     }
-
 }
 
 @Preview(showBackground = true, widthDp = 700)
 @Composable
 private fun ProductsSectionPreview() {
-    ProductsSection(sampleProducts)
+    ProductsSection("Promoções", sampleProducts)
 }
 

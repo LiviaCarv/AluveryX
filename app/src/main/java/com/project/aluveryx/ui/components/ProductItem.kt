@@ -34,8 +34,6 @@ import com.project.aluveryx.R
 import com.project.aluveryx.extensions.toBrazilianCurrency
 import com.project.aluveryx.ui.theme.AluveryXTheme
 import com.project.aluveryx.ui.theme.Green4
-import com.project.aluveryx.ui.theme.Purple500
-import com.project.aluveryx.ui.theme.Teal200
 import java.math.BigDecimal
 
 @Composable
@@ -58,8 +56,8 @@ fun ProductItem(
                     .background(
                         brush = Brush.horizontalGradient(
                             colors = listOf(
-                                Purple500,
-                                Teal200
+                                MaterialTheme.colorScheme.primary,
+                                MaterialTheme.colorScheme.secondary
                             )
                         )
                     )
@@ -67,7 +65,7 @@ fun ProductItem(
                     .height(imageSize)
             ) {
                 Image(
-                    painter = painterResource(product.image),
+                    painter = painterResource(R.drawable.placeholder),
                     contentDescription = "Product Item",
                     modifier = Modifier
                         .size(imageSize)
@@ -106,6 +104,6 @@ fun ProductItem(
 @Composable
 fun ProductItemPreview() {
     AluveryXTheme {
-        ProductItem(Product("Produto", BigDecimal(19.99), R.drawable.ic_launcher_background))
+        ProductItem(Product("Produto", BigDecimal(19.99)))
     }
 }

@@ -1,22 +1,24 @@
 package com.project.aluveryx.ui.screens
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.project.aluveryx.sampleData.sampleProducts
+import com.project.aluveryx.Product
+import com.project.aluveryx.sampleData.sampleSections
 import com.project.aluveryx.ui.components.ProductsSection
 import com.project.aluveryx.ui.theme.AluveryXTheme
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
-    Column(modifier) {
-        ProductsSection(
-            sampleProducts
-        )
-        ProductsSection(
-            sampleProducts
-        )
+fun HomeScreen(
+    sections: Map<String, List<Product>>,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(modifier) {
+        items(sections.toList()) { (title, productList) ->
+            ProductsSection(title, productList)
+        }
 
     }
 }
@@ -26,6 +28,6 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 @Composable
 private fun HomeScreenPreview() {
     AluveryXTheme {
-        HomeScreen()
+        HomeScreen(sampleSections)
     }
 }
