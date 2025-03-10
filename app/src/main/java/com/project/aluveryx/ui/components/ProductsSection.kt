@@ -14,8 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.project.aluveryx.Product
-import com.project.aluveryx.R
-import java.math.BigDecimal
+import com.project.aluveryx.sampleData.sampleProducts
 
 @Composable
 fun ProductsSection(
@@ -23,7 +22,7 @@ fun ProductsSection(
     modifier: Modifier = Modifier,
     sectionTitle: String = "Title"
 ) {
-    Column (modifier = modifier) {
+    Column(modifier = modifier) {
         Text(
             text = sectionTitle,
             modifier = Modifier.padding(16.dp),
@@ -38,7 +37,7 @@ fun ProductsSection(
             items(productsList) { product ->
                 ProductItem(product)
 
-        }
+            }
 
         }
     }
@@ -48,13 +47,6 @@ fun ProductsSection(
 @Preview(showBackground = true, widthDp = 700)
 @Composable
 private fun ProductsSectionPreview() {
-    ProductsSection(listTest)
+    ProductsSection(sampleProducts)
 }
 
-val listTest = listOf(
-    Product("Produto 1", BigDecimal(19.99), R.drawable.pizza),
-    Product("Produto 2", BigDecimal(20.5), R.drawable.burger),
-    Product("Produto 3", BigDecimal(66.99), R.drawable.cupcake),
-    Product("Produto 4", BigDecimal(74)),
-    Product("Produto 5", BigDecimal(1.25)),
-)
