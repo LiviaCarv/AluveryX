@@ -23,12 +23,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.project.aluveryx.Product
 import com.project.aluveryx.R
 import com.project.aluveryx.extensions.toBrazilianCurrency
@@ -64,8 +67,12 @@ fun ProductItem(
                     .fillMaxWidth()
                     .height(imageSize)
             ) {
-                Image(
-                    painter = painterResource(R.drawable.placeholder),
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(product.image)
+                        .crossfade(true)
+                        .build(),
+                    placeholder = painterResource(R.drawable.placeholder),
                     contentDescription = "Product Item",
                     modifier = Modifier
                         .size(imageSize)
