@@ -11,6 +11,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.project.aluveryx.ui.components.ProductsSection
+import com.project.aluveryx.ui.components.listTest
+import com.project.aluveryx.ui.screens.HomeScreen
 import com.project.aluveryx.ui.theme.AluveryXTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,18 +27,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun App(modifier: Modifier = Modifier) {
+fun App() {
     AluveryXTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            Column(modifier.padding(innerPadding)) {
-                ProductsSection(
-                    listTest
-                )
-                ProductsSection(
-                    listTest
-                )
-
-            }
+            HomeScreen()
         }
     }
 
