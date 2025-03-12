@@ -1,6 +1,5 @@
 package com.project.aluveryx.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.project.aluveryx.Product
+import com.project.aluveryx.model.Product
 import com.project.aluveryx.R
 import com.project.aluveryx.extensions.toBrazilianCurrency
 import com.project.aluveryx.ui.theme.AluveryXTheme

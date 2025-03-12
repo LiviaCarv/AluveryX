@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.project.aluveryx.Product
+import com.project.aluveryx.model.Product
 import com.project.aluveryx.sampleData.sampleSections
 import com.project.aluveryx.ui.components.ProductsSection
 import com.project.aluveryx.ui.components.SearchTextField

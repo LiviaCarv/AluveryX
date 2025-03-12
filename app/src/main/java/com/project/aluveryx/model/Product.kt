@@ -1,4 +1,4 @@
-package com.project.aluveryx
+package com.project.aluveryx.model
 
 import java.math.BigDecimal
 

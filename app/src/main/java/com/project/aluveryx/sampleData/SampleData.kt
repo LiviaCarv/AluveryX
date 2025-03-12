@@ -1,7 +1,6 @@
 package com.project.aluveryx.sampleData
 
-import com.project.aluveryx.Product
-import com.project.aluveryx.R
+import com.project.aluveryx.model.Product
 import java.math.BigDecimal
 
 val sampleCandies = listOf(
