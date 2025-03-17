@@ -1,13 +1,22 @@
 package br.com.alura.aluvery.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -17,9 +26,9 @@ import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.project.aluveryx.model.Product
 import com.project.aluveryx.R
 import com.project.aluveryx.extensions.toBrazilianCurrency
+import com.project.aluveryx.model.Product
 import com.project.aluveryx.sampleData.sampleProducts
 import com.project.aluveryx.ui.theme.AluveryXTheme
 import java.math.BigDecimal
@@ -30,11 +39,14 @@ fun CardProductItem(
     modifier: Modifier = Modifier,
     elevation: Dp = 4.dp
 ) {
+    var descriptionExpanded by rememberSaveable { mutableStateOf(false) }
     Card(
-        modifier = modifier.fillMaxWidth().heightIn(150.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(150.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = elevation
-        )
+        ),
     ) {
         Column {
             AsyncImage(
@@ -52,21 +64,20 @@ fun CardProductItem(
                     .background(MaterialTheme.colorScheme.onPrimary)
                     .padding(16.dp)
             ) {
-                Text(
-                    text = product.name
-                )
-                Text(
-                    text = product.price.toBrazilianCurrency()
-                )
+                Text(text = product.name)
+                Text(text = product.price.toBrazilianCurrency())
             }
-             product.description?.let {
-                 Text(
-                     text = product.description,
-                     modifier = Modifier.padding(16.dp),
-                     maxLines = 4,
-                     overflow = TextOverflow.Ellipsis
-                 )
-             }
+            product.description?.let {
+                Text(
+                    text = product.description,
+                    modifier = Modifier.padding(16.dp),
+                    maxLines = if (descriptionExpanded) Int.MAX_VALUE else 4,
+                    overflow = if (descriptionExpanded) TextOverflow.Visible else TextOverflow.Ellipsis
+                )
+                TextButton(onClick = { descriptionExpanded = !descriptionExpanded }) {
+                    Text(if (descriptionExpanded) "Show less" else "Show more")
+                }
+            }
         }
     }
 }
