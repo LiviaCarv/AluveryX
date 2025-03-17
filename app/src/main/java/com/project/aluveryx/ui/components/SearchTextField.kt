@@ -30,7 +30,7 @@ fun SearchTextField(modifier: Modifier = Modifier) {
         },
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+            .padding(horizontal = 16.dp),
         shape = RoundedCornerShape(50),
         label = {
             Text("Product")
@@ -44,7 +44,7 @@ fun SearchTextField(modifier: Modifier = Modifier) {
     )
 }
 
-@Preview(showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 private fun SearchTextFieldPreview() {
     AluveryXTheme {

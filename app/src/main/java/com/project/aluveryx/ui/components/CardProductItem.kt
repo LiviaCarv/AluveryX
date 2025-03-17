@@ -13,6 +13,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -21,6 +22,7 @@ import com.project.aluveryx.R
 import com.project.aluveryx.extensions.toBrazilianCurrency
 import com.project.aluveryx.sampleData.sampleProducts
 import com.project.aluveryx.ui.theme.AluveryXTheme
+import java.math.BigDecimal
 
 @Composable
 fun CardProductItem(
@@ -57,12 +59,14 @@ fun CardProductItem(
                     text = product.price.toBrazilianCurrency()
                 )
             }
-             Text(
-                 text = product.description,
-                 modifier = Modifier.padding(16.dp),
-                 maxLines = 4,
-                 overflow = TextOverflow.Ellipsis
-             )
+             product.description?.let {
+                 Text(
+                     text = product.description,
+                     modifier = Modifier.padding(16.dp),
+                     maxLines = 4,
+                     overflow = TextOverflow.Ellipsis
+                 )
+             }
         }
     }
 }
@@ -74,6 +78,22 @@ private fun CardProductItemPreview() {
         Surface {
             CardProductItem(
                 product = sampleProducts.random(),
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CardProductItemWithDescriptionPreview() {
+    AluveryXTheme {
+        Surface {
+            CardProductItem(
+                product = Product(
+                    name = "Test",
+                    price = BigDecimal("9.99"),
+                    description = LoremIpsum(50).values.first()
+                ),
             )
         }
     }
