@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-03-19T11:16:47.847943400Z">
+        <DropdownSelection timestamp="2025-03-19T11:55:28.324815900Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=RQCX807QZPH" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\livia\.android\avd\Nexus_5X_API_30.avd" />
             </handle>
           </Target>
         </DropdownSelection>

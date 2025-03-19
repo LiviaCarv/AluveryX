@@ -30,6 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -100,6 +102,10 @@ fun ProductFormScreen(modifier: Modifier = Modifier) {
            label = {
                Text("Image's url")
            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Uri,
+                imeAction = ImeAction.Next
+            ),
         )
         OutlinedTextField(
             value = name,
@@ -107,16 +113,29 @@ fun ProductFormScreen(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth(),
             label = {
                 Text("Product name")
-            }
+            },
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Text,
+                capitalization = KeyboardCapitalization.Words
+            )
         )
         OutlinedTextField(
             value = price,
-            onValueChange = { price = it },
+            onValueChange = { input ->
+                val formattedInput = input.replace(",",".").filter {
+                    it.isDigit() || it == '.'
+                }
+                if (formattedInput.count {it == '.'} <= 1) {
+                    price = formattedInput
+                }
+            },
             modifier = Modifier.fillMaxWidth(),
             label = {
                 Text("Price")
             },
             keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
                 keyboardType = KeyboardType.Decimal
             )
             )
@@ -126,7 +145,11 @@ fun ProductFormScreen(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth().heightIn(100.dp),
             label = {
                 Text("Description")
-            }
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                capitalization = KeyboardCapitalization.Sentences
+            ),
         )
         ElevatedButton(
             modifier = Modifier.fillMaxWidth(),
