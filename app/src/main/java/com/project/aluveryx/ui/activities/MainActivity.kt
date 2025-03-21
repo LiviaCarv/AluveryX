@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -16,25 +17,40 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.project.aluveryx.dao.ProductDao
+import com.project.aluveryx.sampleData.sampleCandies
+import com.project.aluveryx.sampleData.sampleDrinks
 import com.project.aluveryx.sampleData.sampleSections
 import com.project.aluveryx.ui.screens.HomeScreen
 import com.project.aluveryx.ui.theme.AluveryXTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val dao = ProductDao()
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
            App(onFabClick = {
                startActivity(Intent(this, ProductFormActivity::class.java ))
-           })
+           }) {
+                val sections = mapOf(
+                    "All products" to dao.products(),
+                    "On Sale" to sampleDrinks + sampleCandies,
+                    "Candies" to sampleCandies,
+                    "Drinks" to sampleDrinks,
+                    )
+               HomeScreen(sections = sections)
+           }
         }
     }
 }
 
 @Composable
 fun App(
-    onFabClick: () -> Unit = {}
+    onFabClick: () -> Unit = {},
+    content: @Composable () -> Unit = {}
 ) {
     AluveryXTheme {
         Scaffold(
@@ -45,7 +61,9 @@ fun App(
                 }
             },
         ) { innerPadding ->
-            HomeScreen(sampleSections, Modifier.padding(innerPadding))
+            Box(modifier = Modifier.padding(innerPadding)) {
+                content()
+            }
         }
     }
 
