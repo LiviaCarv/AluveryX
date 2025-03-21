@@ -1,11 +1,17 @@
 package com.project.aluveryx.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonElevation
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,15 +25,26 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-           App()
+           App(onFabClick = {
+               startActivity(Intent(this, ProductFormActivity::class.java ))
+           })
         }
     }
 }
 
 @Composable
-fun App() {
+fun App(
+    onFabClick: () -> Unit = {}
+) {
     AluveryXTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            floatingActionButton = {
+                FloatingActionButton(onClick = onFabClick) {
+                    Icon(Icons.Default.Add, "Add new product")
+                }
+            },
+        ) { innerPadding ->
             HomeScreen(sampleSections, Modifier.padding(innerPadding))
         }
     }
