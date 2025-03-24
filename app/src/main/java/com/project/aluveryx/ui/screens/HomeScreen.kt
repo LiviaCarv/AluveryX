@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,36 +21,46 @@ import com.project.aluveryx.ui.components.ProductsSection
 import com.project.aluveryx.ui.components.SearchTextField
 import com.project.aluveryx.ui.theme.AluveryXTheme
 
+class HomeScreenUiState(search: String = "") {
+    var text by mutableStateOf(search)
+    val productsFilter
+        get() =
+            sampleProducts.filter {
+                (it.name.contains(
+                    text,
+                    ignoreCase = true
+                ) || it.description?.contains(
+                    text,
+                    ignoreCase = true,
+                ) ?: false)
+            }
+
+    fun isShowSection(): Boolean {
+        return text.isBlank()
+    }
+}
+
 @Composable
 fun HomeScreen(
     sections: Map<String, List<Product>>,
     modifier: Modifier = Modifier,
     search: String = ""
 ) {
-    var text by rememberSaveable { mutableStateOf(search) }
-    val productsFilter = remember(text) {
-        sampleProducts.filter {
-            (it.name.contains(
-                text,
-                ignoreCase = true
-            ) || it.description?.contains(
-                text,
-                ignoreCase = true,
-            ) ?: false)
-        }
-    }
     Column(modifier = modifier) {
-        SearchTextField(text, { newValue -> text = newValue })
+        val state = remember { HomeScreenUiState(search) }
+        val text = state.text
+        val searchedProducts = remember(text) { state.productsFilter }
+        SearchTextField(text, { newValue -> state.text = newValue })
         LazyColumn(
             modifier = Modifier,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            if (text.isBlank()) {
+            if (state.isShowSection()) {
                 items(sections.toList()) { (title, productList) ->
                     ProductsSection(title, productList)
                 }
             } else {
-                items(productsFilter) { product ->
+                items(searchedProducts) { product ->
                     CardProductItem(
                         product = product,
                         modifier = Modifier.padding(horizontal = 16.dp)
