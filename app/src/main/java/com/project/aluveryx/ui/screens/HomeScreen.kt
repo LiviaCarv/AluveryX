@@ -23,6 +23,8 @@ import com.project.aluveryx.ui.theme.AluveryXTheme
 
 class HomeScreenUiState(search: String = "") {
     var text by mutableStateOf(search)
+        private set
+
     val productsFilter
         get() =
             sampleProducts.filter {
@@ -35,6 +37,10 @@ class HomeScreenUiState(search: String = "") {
                 ) ?: false)
             }
 
+    val onSearchChange: (String) -> Unit = { search ->
+        text = search
+    }
+
     fun isShowSection(): Boolean {
         return text.isBlank()
     }
@@ -44,15 +50,14 @@ class HomeScreenUiState(search: String = "") {
 fun HomeScreen(
     sections: Map<String, List<Product>>,
     modifier: Modifier = Modifier,
-    search: String = ""
+    state: HomeScreenUiState = HomeScreenUiState()
 ) {
     Column(modifier = modifier) {
-        val state = remember { HomeScreenUiState(search) }
         val text = state.text
         val searchedProducts = remember(text) { state.productsFilter }
-        SearchTextField(text, { newValue -> state.text = newValue })
+        SearchTextField(text, { newValue -> state.onSearchChange(newValue) })
         LazyColumn(
-            modifier = Modifier,
+            modifier = Modifier.padding(top = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             if (state.isShowSection()) {
@@ -83,6 +88,6 @@ private fun HomeScreenPreview() {
 @Composable
 private fun HomeScreenWithSearchPreview() {
     AluveryXTheme {
-        HomeScreen(sampleSections, search = "sor")
+        HomeScreen(sampleSections, state = HomeScreenUiState("sor"))
     }
 }
