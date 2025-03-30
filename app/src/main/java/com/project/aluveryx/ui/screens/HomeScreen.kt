@@ -21,7 +21,10 @@ import com.project.aluveryx.ui.components.ProductsSection
 import com.project.aluveryx.ui.components.SearchTextField
 import com.project.aluveryx.ui.theme.AluveryXTheme
 
-class HomeScreenUiState(search: String = "") {
+class HomeScreenUiState(
+    search: String = "",
+    val sections: Map<String, List<Product>> = emptyMap()
+) {
     var text by mutableStateOf(search)
         private set
 
@@ -48,11 +51,11 @@ class HomeScreenUiState(search: String = "") {
 
 @Composable
 fun HomeScreen(
-    sections: Map<String, List<Product>>,
     modifier: Modifier = Modifier,
     state: HomeScreenUiState = HomeScreenUiState()
 ) {
     Column(modifier = modifier) {
+        val sections = state.sections
         val text = state.text
         val searchedProducts = remember(text) { state.productsFilter }
         SearchTextField(text, { newValue -> state.onSearchChange(newValue) })
@@ -80,7 +83,7 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenPreview() {
     AluveryXTheme {
-        HomeScreen(sampleSections)
+        HomeScreen(state = HomeScreenUiState(sections = sampleSections))
     }
 }
 
@@ -88,6 +91,6 @@ private fun HomeScreenPreview() {
 @Composable
 private fun HomeScreenWithSearchPreview() {
     AluveryXTheme {
-        HomeScreen(sampleSections, state = HomeScreenUiState("sor"))
+        HomeScreen(state = HomeScreenUiState("sor", sections = sampleSections))
     }
 }
