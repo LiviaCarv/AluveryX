@@ -42,46 +42,9 @@ class MainActivity : ComponentActivity() {
             App(onFabClick = {
                 startActivity(Intent(this, ProductFormActivity::class.java))
             }) {
-                var text by rememberSaveable {
-                    mutableStateOf("")
-                }
-
                 val products = dao.products()
 
-                fun containsInNameOrDescription() = { product: Product ->
-                    product.name.contains(
-                        text,
-                        ignoreCase = true,
-                        ) || product.description?.contains(
-                        text,
-                        ignoreCase = true,
-                        ) ?: false
-                }
-
-                val productsFilter = remember(text, products) {
-                    if (text.isNotBlank()) {
-                        sampleProducts.filter(containsInNameOrDescription()) +
-                                products.filter(containsInNameOrDescription())
-                    } else emptyList()
-                }
-
-                val sections = mapOf(
-                    "All products" to products,
-                    "On Sale" to sampleDrinks + sampleCandies,
-                    "Candies" to sampleCandies,
-                    "Drinks" to sampleDrinks,
-                )
-                val state = remember(products, text) {
-                    HomeScreenUiState(
-                        sections = sections,
-                        searchedProducts = productsFilter,
-                        searchText = text,
-                        onSearchChange = {
-                            text = it
-                        },
-                    )
-                }
-                HomeScreen(state = state)
+                HomeScreen(products = products)
             }
         }
     }
