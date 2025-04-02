@@ -47,6 +47,7 @@ fun CardProductItem(
         elevation = CardDefaults.cardElevation(
             defaultElevation = elevation
         ),
+        onClick = {descriptionExpanded = !descriptionExpanded }
     ) {
         Column {
             AsyncImage(
@@ -68,15 +69,13 @@ fun CardProductItem(
                 Text(text = product.price.toBrazilianCurrency())
             }
             product.description?.let {
-                Text(
-                    text = product.description,
-                    modifier = Modifier.padding(16.dp),
-                    maxLines = if (descriptionExpanded) Int.MAX_VALUE else 4,
-                    overflow = if (descriptionExpanded) TextOverflow.Visible else TextOverflow.Ellipsis
-                )
-                TextButton(onClick = { descriptionExpanded = !descriptionExpanded }) {
-                    Text(if (descriptionExpanded) "Show less" else "Show more")
+                if (descriptionExpanded) {
+                    Text(
+                        text = product.description,
+                        modifier = Modifier.padding(16.dp),
+                    )
                 }
+
             }
         }
     }
