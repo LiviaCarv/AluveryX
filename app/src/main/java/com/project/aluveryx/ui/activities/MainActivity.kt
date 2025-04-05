@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -19,12 +20,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.project.aluveryx.dao.ProductDao
 import com.project.aluveryx.sampleData.sampleSections
 import com.project.aluveryx.ui.screens.HomeScreen
-import com.project.aluveryx.ui.screens.HomeScreenUiState
+import com.project.aluveryx.ui.states.HomeScreenUiState
 import com.project.aluveryx.ui.theme.AluveryXTheme
+import com.project.aluveryx.ui.viewmodels.HomeScreenViewModel
 
 class MainActivity : ComponentActivity() {
 
-    private val dao = ProductDao()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +35,9 @@ class MainActivity : ComponentActivity() {
             App(onFabClick = {
                 startActivity(Intent(this, ProductFormActivity::class.java))
             }) {
-                val products = dao.products()
+                val viewModel by viewModels<HomeScreenViewModel>()
 
-                HomeScreen(products = products)
+                HomeScreen(viewModel = viewModel)
             }
         }
     }
@@ -43,8 +45,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun App(
-    onFabClick: () -> Unit = {},
-    content: @Composable () -> Unit = {}
+    onFabClick: () -> Unit = {}, content: @Composable () -> Unit = {}
 ) {
     AluveryXTheme {
         Scaffold(
