@@ -5,6 +5,7 @@ data class ProductFormScreenUiState(
     val productName: String = "",
     val price: String = "",
     val description: String = "",
+    val isShowPreview: Boolean = url.isNotBlank(),
     val onUrlChange: (String) -> Unit = {},
     val onProductNameChange: (String) -> Unit = {},
     val onPriceChange: (String) -> Unit = {},

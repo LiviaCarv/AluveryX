@@ -18,7 +18,8 @@ class ProductFormScreenViewModel : ViewModel() {
             currentState.copy(
                 onUrlChange = { url ->
                     _uiState.value = _uiState.value.copy(
-                        url = url
+                        url = url,
+                        isShowPreview = url.isNotBlank()
                     )
                 },
                 onProductNameChange = {

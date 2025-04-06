@@ -83,7 +83,7 @@ fun ProductFormScreen(
                 .imePadding(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            if (url.isNotBlank()) {
+            if (state.isShowPreview) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(url)
