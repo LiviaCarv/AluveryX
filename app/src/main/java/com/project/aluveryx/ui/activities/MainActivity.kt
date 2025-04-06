@@ -17,7 +17,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.project.aluveryx.dao.ProductDao
 import com.project.aluveryx.sampleData.sampleSections
 import com.project.aluveryx.ui.screens.HomeScreen
 import com.project.aluveryx.ui.states.HomeScreenUiState
@@ -25,7 +24,6 @@ import com.project.aluveryx.ui.theme.AluveryXTheme
 import com.project.aluveryx.ui.viewmodels.HomeScreenViewModel
 
 class MainActivity : ComponentActivity() {
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

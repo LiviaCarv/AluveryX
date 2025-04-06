@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.project.aluveryx.model.Product
 import com.project.aluveryx.sampleData.sampleSections
 import com.project.aluveryx.ui.components.CardProductItem
 import com.project.aluveryx.ui.components.ProductsSection
