@@ -18,10 +18,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -34,58 +32,22 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.project.aluveryx.R
 import com.project.aluveryx.model.Product
+import com.project.aluveryx.ui.states.ProductFormScreenUiState
+import com.project.aluveryx.ui.viewmodels.ProductFormScreenViewModel
 import java.math.BigDecimal
-
-class ProductFormScreenUiState(
-    val url: String = "",
-    val productName: String = "",
-    val price: String = "",
-    val description: String = "",
-    val onUrlChange: (String) -> Unit = {},
-    val onProductNameChange: (String) -> Unit = {},
-    val onPriceChange: (String) -> Unit = {},
-    val onDescriptionChange: (String) -> Unit = {},
-)
 
 // stateful
 @Composable
 fun ProductFormScreen(
     onSaveClick: (Product) -> Unit,
+    viewModel: ProductFormScreenViewModel,
     modifier: Modifier = Modifier
 ) {
-    var url by rememberSaveable { mutableStateOf("") }
-    var name by rememberSaveable { mutableStateOf("") }
-    var price by rememberSaveable { mutableStateOf("") }
-    var description by rememberSaveable { mutableStateOf("") }
 
-    val state =
-        ProductFormScreenUiState(
-            url = url,
-            productName = name,
-            price = price,
-            description = description,
-            onProductNameChange = {
-                name = it
-            },
-            onPriceChange = { input ->
-                val formattedInput = input.replace(",", ".").filter {
-                    it.isDigit() || it == '.'
-                }
-                if (formattedInput.count { it == '.' } <= 1) {
-                    price = formattedInput
-                }
-            },
-            onUrlChange = {
-                url = it
-            },
-            onDescriptionChange = {
-                description = it
-            },
-        )
-
+    val state by viewModel.uiState.collectAsState()
 
     fun onSaveClick() {
-        onSaveClick(createProduct(name, price, url, description))
+        onSaveClick(createProduct(state.productName, state.price, state.url, state.description))
     }
 
     ProductFormScreen(state = state, onSaveClick = { onSaveClick() }, modifier = modifier)
@@ -200,7 +162,7 @@ fun ProductFormScreen(
     }
 }
 
-fun createProduct(name: String, price: String, url: String, description: String): Product {
+private fun createProduct(name: String, price: String, url: String, description: String): Product {
     val convertedPrice = try {
         BigDecimal(price)
     } catch (exception: NumberFormatException) {
@@ -208,3 +170,4 @@ fun createProduct(name: String, price: String, url: String, description: String)
     }
     return Product(name, convertedPrice, url, description)
 }
+

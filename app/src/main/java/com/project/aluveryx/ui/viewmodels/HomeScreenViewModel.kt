@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class HomeScreenViewModel : ViewModel() {
     private val dao = ProductDao()
 
-    private var _uiState: MutableStateFlow<HomeScreenUiState> = MutableStateFlow(HomeScreenUiState())
+    private val _uiState: MutableStateFlow<HomeScreenUiState> = MutableStateFlow(HomeScreenUiState())
     val uiState get() = _uiState.asStateFlow()
 
 
