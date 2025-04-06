@@ -11,14 +11,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.project.aluveryx.dao.ProductDao
 import com.project.aluveryx.ui.screens.ProductFormScreen
 import com.project.aluveryx.ui.theme.AluveryXTheme
 import com.project.aluveryx.ui.viewmodels.ProductFormScreenViewModel
 
 class ProductFormActivity : ComponentActivity() {
-
-    private val dao = ProductDao()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +27,7 @@ class ProductFormActivity : ComponentActivity() {
 
                     ProductFormScreen(
                         modifier = Modifier.padding(innerPadding),
-                        onSaveClick = {
-                            dao.saveProduct(it)
-                            finish()
-                        },
+                        onSaveClick = { finish() },
                         viewModel = viewModel
                     )
                 }

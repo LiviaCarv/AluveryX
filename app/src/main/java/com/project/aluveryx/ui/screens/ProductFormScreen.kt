@@ -31,26 +31,23 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.project.aluveryx.R
-import com.project.aluveryx.model.Product
 import com.project.aluveryx.ui.states.ProductFormScreenUiState
 import com.project.aluveryx.ui.viewmodels.ProductFormScreenViewModel
-import java.math.BigDecimal
 
 // stateful
 @Composable
 fun ProductFormScreen(
-    onSaveClick: (Product) -> Unit,
+    onSaveClick: () -> Unit,
     viewModel: ProductFormScreenViewModel,
     modifier: Modifier = Modifier
 ) {
 
     val state by viewModel.uiState.collectAsState()
 
-    fun onSaveClick() {
-        onSaveClick(createProduct(state.productName, state.price, state.url, state.description))
-    }
-
-    ProductFormScreen(state = state, onSaveClick = { onSaveClick() }, modifier = modifier)
+    ProductFormScreen(state = state, onSaveClick = {
+        viewModel.save()
+        onSaveClick()
+    }, modifier = modifier)
 }
 
 
@@ -162,12 +159,4 @@ fun ProductFormScreen(
     }
 }
 
-private fun createProduct(name: String, price: String, url: String, description: String): Product {
-    val convertedPrice = try {
-        BigDecimal(price)
-    } catch (exception: NumberFormatException) {
-        BigDecimal.ZERO
-    }
-    return Product(name, convertedPrice, url, description)
-}
 
